@@ -10,6 +10,7 @@ using CompareProductAPI.Models;
 
 namespace CompareProductAPI.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase

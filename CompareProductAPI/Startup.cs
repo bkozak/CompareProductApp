@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using CompareProductAPI.Data;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 
 namespace CompareProductAPI
 {
@@ -40,6 +41,11 @@ namespace CompareProductAPI
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "CPClientApp/dist";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,9 +60,26 @@ namespace CompareProductAPI
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+
             app.UseMvc();
+
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "CPClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
+            });
+
         }
     }
 }
