@@ -1,5 +1,6 @@
 export interface Product {
     Id: number;
+    productIdFromShop: number;
     name: string;
   categoryId: number;
   categoryName: string;
@@ -12,4 +13,7 @@ export interface Product {
   createDate: string;
   shopId: number;
   shopName: string;
+  url: string;
+  image: string;
+  brand: string;
   }

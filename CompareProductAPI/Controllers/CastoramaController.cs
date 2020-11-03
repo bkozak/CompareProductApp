@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using CompareProductAPI.Data;
 using CompareProductAPI.Models;
@@ -25,11 +26,13 @@ namespace CompareProductAPI.Controllers
         [HttpGet, Route("getFromExternal")]
         public async Task<IActionResult> GetFromExternal()
         {
-            var url = "https://www.castorama.pl/api/rest/headless/public/categories/products?searchCriteria[currentPage]=1&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[filterGroups][0][filters][0][field]=category&searchCriteria[filterGroups][0][filters][0][value]=1942&searchCriteria[sortOrders][0][direction]=desc&searchCriteria[sortOrders][0][field]=promoted&storeId=default";
+            var categ = "1942";
+            var url = "https://www.castorama.pl/api/rest/headless/public/categories/products?";
+            var adress = String.Format("searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[filterGroups][0][filters][0][field]=category&searchCriteria[filterGroups][0][filters][0][value]={0}", categ);
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync(url))
+                using (var response = await httpClient.GetAsync(url + adress))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     var data = JsonConvert.DeserializeObject<Root>(apiResponse);
@@ -41,10 +44,11 @@ namespace CompareProductAPI.Controllers
                             return BadRequest(ModelState);
                         }
                         var product = SaveDataASProduct(cProd);
-                        _context.Product.Add(product);
-                        await _context.SaveChangesAsync();
-
-                        
+                        if(product != null)
+                        {
+                            _context.Product.Add(product);
+                            await _context.SaveChangesAsync();
+                        }
                     }
                 }
             }
@@ -53,20 +57,31 @@ namespace CompareProductAPI.Controllers
 
         private Product SaveDataASProduct(CastoramaProduct castoramaProducts)
         {
-            var prod = new Product();
-            prod.Name = castoramaProducts.name;
-            prod.CategoryId = 1;
-            prod.Category = _context.Category.Find(1);
-            prod.SKU = 123;
-            prod.EAN = 1234;
-            prod.Price = 10;
-            prod.UnitId = 1;
-            prod.Unit = _context.Unit.Find(1);
-            prod.UnitPrice = 20;
-            prod.CreateDate = DateTime.Now;
-            prod.Shop = _context.Shop.Find(1);
+            if(_context.Product.Any(x => x.ProductIdFromShop == castoramaProducts.entity_id))
+            {
+                return null;
+            }else
+            {
+                var prod = new Product();
+                prod.ProductIdFromShop = castoramaProducts.entity_id;
+                prod.Name = castoramaProducts.name;
+                prod.CategoryId = 1;
+                prod.Category = _context.Category.Find(1);
+                if (int.TryParse(castoramaProducts.sku, out int result))
+                    prod.SKU = result;
+                prod.EAN = null;
+                prod.Price = 10;
+                prod.UnitId = 1;
+                prod.Unit = _context.Unit.FirstOrDefault(x => x.Name == castoramaProducts.price_tag_unit) ?? new Unit { Name = castoramaProducts.price_tag_unit };
+                prod.UnitPrice = 20;
+                prod.CreateDate = DateTime.Now;
+                prod.Shop = _context.Shop.Find(1);
+                prod.Image = castoramaProducts.image;
+                prod.Url = castoramaProducts.url;
+                prod.brand = castoramaProducts.brand == null ? "" : castoramaProducts.brand;
 
-            return prod;
+                return prod;
+            }
         }
     }
 }

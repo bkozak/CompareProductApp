@@ -24,11 +24,12 @@ namespace CompareProductAPI.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public IEnumerable<ProductDTO> GetProduct()
+        public IEnumerable<dynamic> GetProduct()
         {
-            return _context.Product.Select(p => new ProductDTO()
+            return _context.Product.Select(p => new
             {
                 Id = p.Id,
+                ProductIdFromShop = p.ProductIdFromShop, 
                 Name = p.Name,
                 CategoryId = p.Category.Id,
                 CategoryName = p.Category.Name,
@@ -40,7 +41,10 @@ namespace CompareProductAPI.Controllers
                 Price = p.Price,
                 CreateDate = p.CreateDate,
                 ShopId = p.Shop.Id,
-                ShopName = p.Shop.Name
+                ShopName = p.Shop.Name,
+                Url = p.Url,
+                Image = p.Image,
+                Brand = p.brand
             });
         }
 
