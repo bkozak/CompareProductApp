@@ -24,9 +24,24 @@ namespace CompareProductAPI.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public IEnumerable<Product> GetProduct()
+        public IEnumerable<ProductDTO> GetProduct()
         {
-            return _context.Product;
+            return _context.Product.Select(p => new ProductDTO()
+            {
+                Id = p.Id,
+                Name = p.Name,
+                CategoryId = p.Category.Id,
+                CategoryName = p.Category.Name,
+                EAN = p.EAN,
+                SKU = p.SKU,
+                UnitId = p.Unit.Id,
+                UnitName = p.Unit.Name,
+                UnitPrice = p.UnitPrice,
+                Price = p.Price,
+                CreateDate = p.CreateDate,
+                ShopId = p.Shop.Id,
+                ShopName = p.Shop.Name
+            });
         }
 
         // GET: api/Products/5

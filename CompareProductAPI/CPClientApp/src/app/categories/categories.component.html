@@ -1,0 +1,23 @@
+<h1>Kategorie</h1>
+
+<p *ngIf="!categories"><em>Loading...</em></p>
+<p>
+  <!-- <a [routerLink]="['/add']" class="btn btn-primary float-right mb-3">New post</a> -->
+</p>
+
+<table class="table table-sm table-hover" *ngIf="categories?.length>0">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Ilość produktów</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories">
+      <td>{{ category.id }}</td>
+      <td>{{ category.name }}</td>
+      <td>{{ category.products }}</td>
+    </tr>
+  </tbody>
+</table>

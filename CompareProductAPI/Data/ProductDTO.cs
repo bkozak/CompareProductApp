@@ -1,32 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CompareProductAPI.Models
+namespace CompareProductAPI.Data
 {
-    public class Product
+    public class ProductDTO
     {
-        [Key]
+        public ProductDTO()
+        {
+
+        }
         public int Id { get; set; }
         public string Name { get; set; }
-        [ForeignKey("Category")]
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public int EAN { get; set; }
         public int SKU { get; set; }
-        [ForeignKey("Unit")]
         public int UnitId { get; set; }
+        public string UnitName { get; set; }
         public double Price { get; set; }
         public double UnitPrice { get; set; }
         public DateTime CreateDate { get; set; }
-        [ForeignKey("Shop")]
         public int ShopId { get; set; }
-
-
-        public virtual Shop Shop { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual Unit Unit { get; set; }
+        public string ShopName { get; set; }
     }
 }

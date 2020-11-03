@@ -1,12 +1,15 @@
-export class Product {
-    Id?: number;
+export interface Product {
+    Id: number;
     name: string;
-    categoryId: number;
+  categoryId: number;
+  categoryName: string;
     EAN: number;
     SKU: number;
-    unitId: number;
+  unitId: number;
+  unitName: string;
     price: number;
     unitPrice: number;
-    createDate: string;
-    shopId: number;
+  createDate: string;
+  shopId: number;
+  shopName: string;
   }

@@ -25,7 +25,7 @@ namespace CompareProductAPI.Controllers
         [HttpGet, Route("getFromExternal")]
         public async Task<IActionResult> GetFromExternal()
         {
-            var url = "https://www.castorama.pl/api/rest/headless/public/categories/products?searchCriteria[currentPage]=1&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[filterGroups][0][filters][0][field]=category&searchCriteria[filterGroups][0][filters][0][value]=1941&searchCriteria[sortOrders][0][direction]=desc&storeId=default";
+            var url = "https://www.castorama.pl/api/rest/headless/public/categories/products?searchCriteria[currentPage]=1&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[filterGroups][0][filters][0][field]=category&searchCriteria[filterGroups][0][filters][0][value]=1942&searchCriteria[sortOrders][0][direction]=desc&searchCriteria[sortOrders][0][field]=promoted&storeId=default";
 
             using (var httpClient = new HttpClient())
             {
@@ -55,11 +55,16 @@ namespace CompareProductAPI.Controllers
         {
             var prod = new Product();
             prod.Name = castoramaProducts.name;
-            prod.SKU = int.Parse(castoramaProducts.sku);
+            prod.CategoryId = 1;
+            prod.Category = _context.Category.Find(1);
+            prod.SKU = 123;
             prod.EAN = 1234;
             prod.Price = 10;
+            prod.UnitId = 1;
+            prod.Unit = _context.Unit.Find(1);
             prod.UnitPrice = 20;
             prod.CreateDate = DateTime.Now;
+            prod.Shop = _context.Shop.Find(1);
 
             return prod;
         }

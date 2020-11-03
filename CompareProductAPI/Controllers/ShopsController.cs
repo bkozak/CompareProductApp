@@ -23,9 +23,14 @@ namespace CompareProductAPI.Controllers
 
         // GET: api/Shops
         [HttpGet]
-        public IEnumerable<Shop> GetShops()
+        public IEnumerable<dynamic> GetShops()
         {
-            return _context.Shop;
+            return _context.Shop.Select(c => new
+            {
+                id = c.Id,
+                name = c.Name,
+                products = c.Products.Count
+            });
         }
 
         // GET: api/Shops/5
