@@ -9,14 +9,18 @@
   <thead>
     <tr>
       <th>#</th>
+      <th>IDSklepu</th>
       <th>Name</th>
+      <th>Kategoria sklepu</th>
       <th>Ilość produktów</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let category of categories">
       <td>{{ category.id }}</td>
+      <td>{{ category.shopCategoryId }}</td>
       <td>{{ category.name }}</td>
+      <td>{{ category.shopName }}</td>
       <td>{{ category.products }}</td>
     </tr>
   </tbody>

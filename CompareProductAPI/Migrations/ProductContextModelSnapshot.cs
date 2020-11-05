@@ -27,6 +27,10 @@ namespace CompareProductAPI.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("Shop");
+
+                    b.Property<int>("ShopCategoryId");
+
                     b.HasKey("Id");
 
                     b.ToTable("Category");

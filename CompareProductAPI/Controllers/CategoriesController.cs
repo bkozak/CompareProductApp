@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CompareProductAPI.Data;
 using CompareProductAPI.Models;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CompareProductAPI.Controllers
 {
@@ -28,7 +29,10 @@ namespace CompareProductAPI.Controllers
             return _context.Category.Select(c => new
             {
                 id = c.Id,
+                shopCategoryId = c.ShopCategoryId,
                 name = c.Name,
+                shopId = c.Shop,
+                shopName = c.Shop == 1 ? "Castorama" : c.Shop == 2 ? "OBI" : "LeroyMerlin",
                 products = c.Products.Count
             });
         }

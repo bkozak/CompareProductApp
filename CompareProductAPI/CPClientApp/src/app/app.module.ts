@@ -12,6 +12,7 @@ import { ShopsComponent } from './shops/shops.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { GetDataFromExternalComponent } from './get-data-from-external/get-data-from-external.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CategoriesComponent } from './categories/categories.component';
     ProductComponent,
     ShopsComponent,
     NavMenuComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    GetDataFromExternalComponent
   ],
   imports: [
     BrowserModule,
