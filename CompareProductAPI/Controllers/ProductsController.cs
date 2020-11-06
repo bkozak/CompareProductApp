@@ -111,10 +111,16 @@ namespace CompareProductAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Product.Add(product);
-            await _context.SaveChangesAsync();
+            if(_context.Product.Any(it => it.ProductIdFromShop == product.ProductIdFromShop))
+            {
+                return Ok(product);
+            }else
+            {
+                _context.Product.Add(product);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+                return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            }
         }
 
         // DELETE: api/Products/5

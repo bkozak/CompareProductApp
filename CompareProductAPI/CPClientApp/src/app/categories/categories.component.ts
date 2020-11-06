@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Category } from '../models/category';
+import { CategoryService } from '../services/category.service';
+
 
 @Component({
   selector: 'app-categories',
@@ -9,23 +11,27 @@ import { Category } from '../models/category';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
+  categories$: Observable<Category[]>;
 
   public categories: Category[];
 
-  constructor(
-    private http: HttpClient) {
+  constructor(private categoryService: CategoryService) {
   }
 
   ngOnInit() {
-    this.getData();
+    this.loadCategories();
   }
 
-  getData() {
-    var appUrl = environment.appUrl;
-    var apiUrl = 'api/categories/';
+  loadCategories() {
+    this.categories$ = this.categoryService.getCategories();
+  }
 
-    this.http.get<Category[]>(appUrl + apiUrl).subscribe(result => {
-      this.categories = result;
-    }, error => console.error(error));
+  delete(categoryId) {
+    const ans = confirm('Do you want to delete blog post with id: ' + categoryId);
+    if (ans) {
+      this.categoryService.deleteCategory(categoryId).subscribe((data) => {
+        this.loadCategories();
+      });
+    }
   }
 }

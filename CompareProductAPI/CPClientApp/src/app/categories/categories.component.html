@@ -1,27 +1,29 @@
 <h1>Kategorie</h1>
 
-<p *ngIf="!categories"><em>Loading...</em></p>
+<p *ngIf="!(categories$ | async)"><em>Loading...</em></p>
 <p>
-  <!-- <a [routerLink]="['/add']" class="btn btn-primary float-right mb-3">New post</a> -->
+  <a [routerLink]="['/categoryadd']" class="btn btn-primary float-right mb-3">New category</a>
 </p>
 
-<table class="table table-sm table-hover" *ngIf="categories?.length>0">
+<table class="table table-sm table-hover" *ngIf="(categories$ | async)?.length>0">
   <thead>
     <tr>
       <th>#</th>
-      <th>IDSklepu</th>
+      <th>ID według Sklepu</th>
       <th>Name</th>
       <th>Kategoria sklepu</th>
       <th>Ilość produktów</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let category of categories">
+    <tr *ngFor="let category of (categories$ | async)">
       <td>{{ category.id }}</td>
       <td>{{ category.shopCategoryId }}</td>
-      <td>{{ category.name }}</td>
+      <td><a [routerLink]="['/category/', category.id]">{{ category.name }}</a></td>
       <td>{{ category.shopName }}</td>
       <td>{{ category.products }}</td>
+      <td><a [routerLink]="['/category/edit/', category.id]" class="btn btn-primary btn-sm float-right">Edit</a></td>
+      <td><a [routerLink]="" (click)="delete(category.id)" class="btn btn-danger btn-sm float-right">Delete</a></td>
     </tr>
   </tbody>
 </table>

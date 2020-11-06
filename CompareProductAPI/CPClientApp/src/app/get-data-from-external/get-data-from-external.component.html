@@ -1,5 +1,5 @@
 <div class="list-group">
-    <a href="api/Castorama/getFromExternal/{{categoryUrl}}" class="list-group-item list-group-item-action list-group-item-primary">Budowlane Castorama</a>
+    <a [routerLink]="['/']" class="list-group-item list-group-item-action list-group-item-primary">Budowlane Castorama</a>
     <a [routerLink]="['/']" class="list-group-item list-group-item-action list-group-item-warning">Budowlane OBI</a>
     <a [routerLink]="['/']" class="list-group-item list-group-item-action list-group-item-success">Budowlane Leroy Merlin</a>
   </div>
@@ -8,4 +8,5 @@
     <p>{{clickMessage}}</p>
     <input #box>
     <p>{{value}}</p>
-    <p>{{totalAngularPackages}}</p>
+    <!-- <p>{{totalAngularPackages}}</p> -->
+    <p>{{objectArray}}</p>

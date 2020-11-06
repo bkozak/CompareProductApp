@@ -17,12 +17,12 @@ namespace CompareProductAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CastoramaController : ControllerBase
+    public class CastoramaFirstController : ControllerBase
     {
         private readonly ProductContext _context;
         private HttpClient client;
 
-        public CastoramaController(ProductContext context)
+        public CastoramaFirstController(ProductContext context)
         {
             _context = context;
             client = new HttpClient();

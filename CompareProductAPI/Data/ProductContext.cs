@@ -18,6 +18,8 @@ namespace CompareProductAPI.Data
         public DbSet<Category> Category { get; set; }
         public DbSet<Unit> Unit { get; set; }
         public DbSet<Shop> Shop { get; set; }
+        public DbSet<CastoramaProduct> CastoramaProduct { get; set; }
+
 
 
 
@@ -27,6 +29,7 @@ namespace CompareProductAPI.Data
             modelBuilder.Entity<Category>().ToTable("Category");
             modelBuilder.Entity<Unit>().ToTable("Unit");
             modelBuilder.Entity<Shop>().ToTable("Shop");
+            modelBuilder.Entity<CastoramaProduct>().ToTable("Castorama_product");
         }
 
     }
