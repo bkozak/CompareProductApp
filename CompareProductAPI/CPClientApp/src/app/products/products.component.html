@@ -9,29 +9,37 @@
   <thead>
     <tr>
       <th>#</th>
-      <th>Name</th>
-      <th>Category</th>
+      <th>SklepoweID</th>
+      <th>Nazwa</th>
+      <th>Kategoria</th>
       <th>EAN</th>
       <th>SKU</th>
-      <th>Unit</th>
-      <th>Price</th>
-      <th>UnitPrice</th>
-      <th>CreateDate</th>
-      <th>Shop</th>
+      <th>Jednostki</th>
+      <th>Cena</th>
+      <th>Cena wg. Jednostki</th>
+      <th>Data utworzenia</th>
+      <th>Sklep</th>
+      <th>Adres do sklepu</th>
+      <th>Obrazek</th>
+      <th>Marka</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let product of (products$ | async)">
-      <td>{{ product.productId }}</td>
+      <td>{{ product.id }}</td>
+      <td>{{ product.productIdFromShop }}</td>
       <td>{{ product.name }}</td>
-      <td>{{ product.categoryId }}</td>
+      <td>{{ product.categoryName }}</td>
       <td>{{ product.ean }}</td>
       <td>{{ product.sku }}</td>
-      <td>{{ product.unit }}</td>
+      <td>{{ product.unitName }}</td>
       <td>{{ product.price }}</td>
       <td>{{ product.unitPrice }}</td>
-      <td>{{ product.createDate }}</td>
-      <td>{{ product.shopId }}</td>
+      <td>{{ product.createDate | date:'medium'}}</td>
+      <td>{{ product.shopName }}</td>
+      <td><a href ={{product.url}}>Castorama</a></td>
+      <td><img src={{product.image}}/> </td>
+      <td>{{ product.brand }}</td>
       <!-- <td><a [routerLink]="['/blogpost/edit/', blogPost.postId]" class="btn btn-primary btn-sm float-right">Edit</a> -->
       <!-- </td> -->
       <!-- <td><a [routerLink]="" (click)="delete(blogPost.postId)" class="btn btn-danger btn-sm float-right">Delete</a></td> -->

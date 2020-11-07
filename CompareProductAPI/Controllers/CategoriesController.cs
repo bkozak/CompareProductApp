@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CompareProductAPI.Data;
 using CompareProductAPI.Models;
+using System.Security.Cryptography.X509Certificates;
+using System.Linq.Dynamic.Core;
 
 namespace CompareProductAPI.Controllers
 {
@@ -23,9 +25,17 @@ namespace CompareProductAPI.Controllers
 
         // GET: api/Categories
         [HttpGet]
-        public IEnumerable<Category> GetCategory()
+        public IEnumerable<dynamic> GetCategory()
         {
-            return _context.Category;
+            return _context.Category.Select(c => new
+            {
+                id = c.Id,
+                shopCategoryId = c.ShopCategoryId,
+                name = c.Name,
+                shopId = c.Shop,
+                shopName = c.Shop == 1 ? "Castorama" : c.Shop == 2 ? "OBI" : "LeroyMerlin",
+                products = c.Products.Count
+            });
         }
 
         // GET: api/Categories/5
@@ -37,14 +47,23 @@ namespace CompareProductAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var category = await _context.Category.FindAsync(id);
+            //var category = await _context.Category.FindAsync(id);
+            var catAnonymous = _context.Category.Where(x => x.Id == id).Select(c => new 
+            {
+                id = c.Id,
+                shopCategoryId = c.ShopCategoryId,
+                name = c.Name,
+                shopId = c.Shop,
+                shopName = c.Shop == 1 ? "Castorama" : c.Shop == 2 ? "OBI" : "LeroyMerlin",
+                products = c.Products.Count
+            }).FirstOrDefault();
 
-            if (category == null)
+            if (catAnonymous == null)
             {
                 return NotFound();
             }
 
-            return Ok(category);
+            return Ok(catAnonymous);
         }
 
         // PUT: api/Categories/5
@@ -90,6 +109,11 @@ namespace CompareProductAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            //var categoryOutput = new Category()
+            //{
+            //    ShopCategoryId = 
+            //}
 
             _context.Category.Add(category);
             await _context.SaveChangesAsync();

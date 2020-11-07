@@ -1,0 +1,23 @@
+<h1>Sklepy</h1>
+
+<p *ngIf="!shops"><em>Loading...</em></p>
+<p>
+  <!-- <a [routerLink]="['/add']" class="btn btn-primary float-right mb-3">New post</a> -->
+</p>
+
+<table class="table table-sm table-hover" *ngIf="shops?.length>0">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Produkty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let shop of shops">
+      <td>{{ shop.id }}</td>
+      <td>{{ shop.name }}</td>
+      <td>{{ shop.products }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -24,9 +24,28 @@ namespace CompareProductAPI.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public IEnumerable<Product> GetProduct()
+        public IEnumerable<dynamic> GetProduct()
         {
-            return _context.Product;
+            return _context.Product.Select(p => new
+            {
+                Id = p.Id,
+                ProductIdFromShop = p.ProductIdFromShop, 
+                Name = p.Name,
+                CategoryId = p.Category.Id,
+                CategoryName = p.Category.Name,
+                EAN = p.EAN,
+                SKU = p.SKU,
+                UnitId = p.Unit.Id,
+                UnitName = p.Unit.Name,
+                UnitPrice = p.UnitPrice,
+                Price = p.Price,
+                CreateDate = p.CreateDate,
+                ShopId = p.Shop.Id,
+                ShopName = p.Shop.Name,
+                Url = p.Url,
+                Image = p.Image,
+                Brand = p.brand
+            });
         }
 
         // GET: api/Products/5
@@ -92,10 +111,16 @@ namespace CompareProductAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Product.Add(product);
-            await _context.SaveChangesAsync();
+            if(_context.Product.Any(it => it.ProductIdFromShop == product.ProductIdFromShop))
+            {
+                return Ok(product);
+            }else
+            {
+                _context.Product.Add(product);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+                return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            }
         }
 
         // DELETE: api/Products/5

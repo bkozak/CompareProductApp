@@ -8,8 +8,14 @@ namespace CompareProductAPI.Models
 {
     public class Shop
     {
+        public const int Castorama = 1;
+        public const int OBI = 2;
+        public const int LeroyMerlin = 3;
+
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public virtual List<Product> Products { get; set; }
     }
 }

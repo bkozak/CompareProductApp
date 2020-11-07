@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompareProductAPI.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    [Migration("20201101120716_PoprawionyModel")]
-    partial class PoprawionyModel
+    [Migration("20201104092641_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,10 @@ namespace CompareProductAPI.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("Shop");
+
+                    b.Property<int>("ShopCategoryId");
+
                     b.HasKey("Id");
 
                     b.ToTable("Category");
@@ -40,23 +44,34 @@ namespace CompareProductAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<DateTime>("CreateDate");
 
-                    b.Property<int>("EAN");
+                    b.Property<int?>("EAN");
+
+                    b.Property<string>("Image")
+                        .IsRequired();
 
                     b.Property<string>("Name");
 
-                    b.Property<double>("Price");
+                    b.Property<double?>("Price");
 
-                    b.Property<int>("SKU");
+                    b.Property<int>("ProductIdFromShop");
 
-                    b.Property<int?>("ShopId");
+                    b.Property<int?>("SKU");
 
-                    b.Property<int?>("UnitId");
+                    b.Property<int>("ShopId");
 
-                    b.Property<double>("UnitPrice");
+                    b.Property<int>("UnitId");
+
+                    b.Property<double?>("UnitPrice");
+
+                    b.Property<string>("Url")
+                        .IsRequired();
+
+                    b.Property<string>("brand")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -98,16 +113,19 @@ namespace CompareProductAPI.Migrations
             modelBuilder.Entity("CompareProductAPI.Models.Product", b =>
                 {
                     b.HasOne("CompareProductAPI.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CompareProductAPI.Models.Shop", "Shop")
-                        .WithMany()
-                        .HasForeignKey("ShopId");
+                        .WithMany("Products")
+                        .HasForeignKey("ShopId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CompareProductAPI.Models.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId");
+                        .WithMany("Products")
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
