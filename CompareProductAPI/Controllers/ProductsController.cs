@@ -116,6 +116,8 @@ namespace CompareProductAPI.Controllers
                 return Ok(product);
             }else
             {
+                product.Category = _context.Category.First(x => x.ShopCategoryId == product.CategoryId);
+                product.CategoryId = product.Category.Id;
                 _context.Product.Add(product);
                 await _context.SaveChangesAsync();
 

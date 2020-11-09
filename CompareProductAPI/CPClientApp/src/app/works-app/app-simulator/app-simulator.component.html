@@ -1,1 +1,46 @@
-<p>app-simulator works!</p>
+<div class="row">
+    <div class="col-sm-4">
+        <button (click)="clickC()" type="button" class="btn btn-secondary btn-lg">Cegły</button>
+    </div>
+    <div class="col-sm-4">
+        <button (click)="clickB()" type="button" class="btn btn-secondary btn-lg">Bloczki</button>
+    </div>
+    <div class="col-sm-4">
+        <button (click)="clickPC()" type="button" class="btn btn-secondary btn-lg">Pustaki ceramiczne</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <div *ngIf="isVisibleC" class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cegły</h5>
+                <button (click)="getSelectedData()" type="button" class="btn btn-primary btn-rozmiary">Rozmiar1</button>
+                <a href="#" class="btn btn-primary btn-rozmiary">Rozmiar2</a>
+                <a href="#" class="btn btn-primary btn-rozmiary">Rozmiar3</a>
+                <a href="#" class="btn btn-primary btn-rozmiary">Rozmiar4</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div *ngIf="isVisibleB" class="card">
+            <div class="card-body">
+                <h5 class="card-title">Bloczki</h5>
+                <button (click)="getSelectedData()" type="button" class="btn btn-primary btn-rozmiary">Rozmiar1</button>
+                <a href="#" class="btn btn-primary btn-rozmiary">Rozmiar2</a>
+                <a href="#" class="btn btn-primary btn-rozmiary">Rozmiar3</a>
+                <a href="#" class="btn btn-primary btn-rozmiary">Rozmiar4</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div *ngIf="isVisiblePC" class="card">
+            <div class="card-body">
+                <h5 class="card-title">Pustaki ceramiczne</h5>
+                <button (click)="getSelectedData()" type="button" class="btn btn-primary btn-rozmiary">Rozmiar1</button>
+                <a href="#" class="btn btn-primary btn-rozmiary">Rozmiar2</a>
+                <a href="#" class="btn btn-primary btn-rozmiary">Rozmiar3</a>
+                <a href="#" class="btn btn-primary btn-rozmiary">Rozmiar4</a>
+            </div>
+        </div>
+    </div>
+</div>
