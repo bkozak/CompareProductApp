@@ -7,6 +7,7 @@ import { ShopsComponent } from './shops/shops.component';
 import { GetDataFromExternalComponent } from './get-data-from-external/get-data-from-external.component';
 import { CategoryComponent } from './category/category.component';
 import { CategoryAddEditComponent } from './category-add-edit/category-add-edit.component';
+import { AppSimulatorComponent } from './works-app/app-simulator/app-simulator.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'categoryadd', component: CategoryAddEditComponent },
   { path: 'category/edit/:id', component: CategoryAddEditComponent },
   { path: 'getdatafromexternal', component: GetDataFromExternalComponent },
+  { path: 'appsimulator', component: AppSimulatorComponent },
+
   { path: '**', redirectTo: '/' }
 ];
 

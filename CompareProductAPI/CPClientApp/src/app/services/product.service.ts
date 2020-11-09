@@ -29,7 +29,7 @@ export class ProductService {
       );
   }
 
-  getProduct<Product>(id: number): Observable<Product> {
+  getProduct(id: number): Observable<Product> {
    return this.http.get<Product>(this.myAppUrl + this.myApiUrl + id)
      .pipe(
        retry(1),
@@ -37,7 +37,7 @@ export class ProductService {
      );
   }
 
-  saveProduct<Product>(item): Observable<Product> {
+  saveProduct(item): Observable<Product> {
    return this.http.post<Product>(this.myAppUrl + this.myApiUrl, JSON.stringify(item), this.httpOptions)
      .pipe(
        retry(1),
@@ -45,7 +45,7 @@ export class ProductService {
      );
   }
 
-  updateProduct<Product>(id: number, item): Observable<Product> {
+  updateProduct(id: number, item): Observable<Product> {
    return this.http.put<Product>(this.myAppUrl + this.myApiUrl + id, JSON.stringify(item), this.httpOptions)
      .pipe(
        retry(1),
@@ -53,7 +53,7 @@ export class ProductService {
      );
   }
 
-  deleteProduct<Product>(id: number): Observable<Product> {
+  deleteProduct(id: number): Observable<Product> {
    return this.http.delete<Product>(this.myAppUrl + this.myApiUrl + id)
      .pipe(
        retry(1),
