@@ -16,6 +16,7 @@ import { GetDataFromExternalComponent } from './get-data-from-external/get-data-
 import { CategoryComponent } from './category/category.component';
 import { CategoryAddEditComponent } from './category-add-edit/category-add-edit.component';
 import { AppSimulatorComponent } from './works-app/app-simulator/app-simulator.component';
+import { ParseSiteComponent } from './obi/parse-site/parse-site.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AppSimulatorComponent } from './works-app/app-simulator/app-simulator.c
     GetDataFromExternalComponent,
     CategoryComponent,
     CategoryAddEditComponent,
-    AppSimulatorComponent
+    AppSimulatorComponent,
+    ParseSiteComponent
   ],
   imports: [
     BrowserModule,

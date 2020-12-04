@@ -17,12 +17,12 @@ namespace CompareProductAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CastoramaFirstController : ControllerBase
+    public class GetDataHelperController : ControllerBase
     {
         private readonly ProductContext _context;
         private HttpClient client;
 
-        public CastoramaFirstController(ProductContext context)
+        public GetDataHelperController(ProductContext context)
         {
             _context = context;
             client = new HttpClient();
@@ -32,7 +32,7 @@ namespace CompareProductAPI.Controllers
         public async Task<IActionResult> GetFromExternal(int id)
         {
             //int[] allCategory = { id };
-            var uri = String.Format("https://www.castorama.pl/api/rest/headless/public/categories/products?searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[filterGroups][0][filters][0][field]=category&searchCriteria[filterGroups][0][filters][0][value]=");
+            var uri = String.Format("https://www.obi.pl/c/550");
             var task = Task.Run(() => GetAsyncData(uri + id));
             //var inny = await GetData(uri + id);
             try
@@ -61,11 +61,20 @@ namespace CompareProductAPI.Controllers
             return new EmptyResult();
         }
 
+        [HttpGet("getobi/{id}")]
+        public async Task<IActionResult> GetObi(int id)
+        {
+            var uri = String.Format("https://www.obi.pl/c/{0}", id);
+            var content = await client.GetStringAsync(uri);
+
+            return Ok(content);
+        }
+
         public async Task<List<List<CastoramaProduct>>> GetRootsItem(int[] allCategory)
         {
             var semaphore = new SemaphoreSlim(10, 10);
             var RootList = new List<List<CastoramaProduct>>();
-            var url = "https://www.castorama.pl/api/rest/headless/public/categories/products?";
+            var url = "https://www.obi.pl/c/550";
             var adress = String.Format("searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[filterGroups][0][filters][0][field]=category&searchCriteria[filterGroups][0][filters][0][value]=");
 
             try
@@ -131,12 +140,12 @@ namespace CompareProductAPI.Controllers
             }
         }
 
-        private async Task<string> GetData(string url)
-        {
-            var response = await client.GetAsync(url);
-            return await response.Content.ReadAsStringAsync();
-            //return JsonConvert.DeserializeObject<Root>(apiresponse);
-        }
+        //private async Task<string> GetData(string url)
+        //{
+        //    var response = await client.GetAsync(url);
+        //    return await response.Content.ReadAsStringAsync();
+        //    //return JsonConvert.DeserializeObject<Root>(apiresponse);
+        //}
 
         private async Task<Root> GetAsyncData(string uri)
         {

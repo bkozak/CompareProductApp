@@ -58,7 +58,7 @@ export class AppSimulatorComponent implements OnInit {
 
   updateProducts(array) {
     array.forEach(dane => {
-      this.http.post<Product>('api/Products',
+      this.productService.saveProduct(
         {
           "productIdFromShop": dane.entity_id,
           "name": dane.name,
