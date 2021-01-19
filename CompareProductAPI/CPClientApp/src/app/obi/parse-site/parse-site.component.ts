@@ -65,6 +65,8 @@ export class ParseSiteComponent implements OnInit {
       var imageUrl = imageElement.attr('src').valueOf();
       var mapImageUrl = imageElement.attr('data-src');
       this.price = prices.eq(i).text();
+      console.log("cenaprzed", this.price);
+      console.log("cena", this.priceNormalizer(this.price));
       this.url = 'https://www.obi.pl' + urls.eq(i).prop('pathname');
       
       if(obiCode){
@@ -82,7 +84,7 @@ export class ParseSiteComponent implements OnInit {
            "unitId": 2,
            "unitName": "sztuka",
            "unitPrice": 20.0,
-           "price": 10.0,
+           "price": this.priceNormalizer(this.price),
            "createDate": new Date(),
            "shopId": 2,
            "shopName": "OBI",
@@ -93,6 +95,17 @@ export class ParseSiteComponent implements OnInit {
       console.log("GotowyProdukt", this.product);
       this.postData(this.product);
     }
+  }
+
+  priceNormalizer(price) {
+    var priceNumbers = price.match(/\d+/g);
+
+    if(priceNumbers) {
+      var resultPrice = parseFloat(priceNumbers.join('.'));
+      return resultPrice;
+    }
+
+    return 0; 
   }
 
   postData(item) {
